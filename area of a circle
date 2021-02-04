@@ -22,3 +22,53 @@
 1 <= r <= 10000。
 提示
 本题对精度要求较高，请注意π的值应该取较精确的值。你可以使用常量来表示π，比如PI=3.14159265358979323，也可以使用数学公式来求π，比如PI=atan(1.0)*4。
+
+
+解析:
+此题的重点为输出格式的控制，有2个点:1.要求保留小数点后7位 2.且四舍五入
+
+1.保留小数点后7位：
+setprecision(n):控制n位的有效输出
+当它与fixed连用时表示控制小数点后n位输出
+(他俩的头文件为: #include<iomanip>)
+
+2.实现四舍五入:
+比如小数为 f
+(float)((int)(f*100+0.5))/100.0
+首先为了保留两位，乘以100，小数点向前两位， 然后+0.5取整保证是四舍五入 再转成 float形式或double形式 除以100 就OK了(参考自https://wenwen.sogou.com/z/q707305239.htm）
+
+综上问题得到解决
+CODE:(得分0)
+#include <iostream>
+#include<iomanip>
+using namespace std;
+int main()
+{
+    int r;
+    cin>>r;
+    float s;
+    s= r*r*3.14159265358979323;
+    cout<<fixed<<setprecision(7)<<(float)(s*10000000+0.5)/10000000.0;
+    return 0;
+}
+//应该是范围的问题 此处小数点后规定为7位但是float的范围不够，故下处改为double
+
+CODE:(得分70)
+#include <iostream>
+#include<iomanip>
+using namespace std;
+int main()
+{
+    int r;
+    cin>>r;
+    double s;
+    s= r*r*3.14159265358979323;
+    cout<<fixed<<setprecision(7)<<(double)(s*10000000+0.5)/10000000.0;
+    return 0;
+}
+//改float为double后得分70
+//我又尝试了在double后加long成long double型 得分并未发生改变 说明30分不是类型的问题
+//我又去找了个JAVA的100分测试代码:https://www.sogou.com/link?url=CrexC2hj5_4F_sjvjbNtf5hL9o1Nc4lywe97AEP2YUzeZjmx8vU6UQ..
+//虽然没用它找到30分的那个错误，但有个有意思的发现 我那个70分的C++测试只用了15MS 占内存3MB，但是java这个用了171MS 占22MB 
+
+
