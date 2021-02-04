@@ -72,3 +72,42 @@ int main()
 //虽然没用它找到30分的那个错误，但有个有意思的发现 我那个70分的C++测试只用了15MS 占内存3MB，但是java这个用了171MS 占22MB 
 
 
+
+//终于找到了个C++的这道题对应的满分代码:(引自:https://www.cnblogs.com/XuYiting/p/9689027.html)
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#define PI atan(1.0) * 4;
+using namespace std;
+
+int main()
+{
+    int Radius;
+    double Circle_Area;
+    cin >> Radius;
+    Circle_Area = Radius * Radius * PI;
+    cout << setiosflags(ios::fixed) << setprecision(7) << Circle_Area;//输出一个小数点后七位的浮点数（且四舍五入）
+
+    return 0;
+}
+//但好像和我的没什么差别 只是它使用的是题目中给的另一种求π的方式
+//把输出方法改成了和它的一样试了下 但还是70分 所以应该是我用的题目给的小数不行 它还是不够精确（所以你题目为什么要给个小数出来）
+//试了下 把我的小数换成了和它一样的π来表示 但是还是70分 所以我错怪题目了。
+
+//又看了下100分的C++代码 发现它没有四舍五入的考虑 但是我这里有四舍五入 然后试了下 果然得了100分
+
+code:(得分100)
+#include <iostream>
+#include<iomanip>
+using namespace std;
+int main()
+{
+    int r;
+    cin>>r;
+    double s;
+    s= r*r*3.14159265358979323;
+    cout<<fixed<<setprecision(7)<<(double)(s*10000000)/10000000.0;
+    return 0;
+}
+//我明明看见了题目里面有四舍五入的说明的 但是它自己却不是含有四舍五入的答案 
+//所以我还多考虑了一个点吗。。
