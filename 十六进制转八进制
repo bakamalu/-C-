@@ -27,3 +27,187 @@
 
 　　【提示】
 　　先将十六进制数转换成某进制数，再由某进制数转换成八进制。
+
+
+CODE:(得分：0)
+
+#include<iostream>
+#include<cmath>
+#include<cstring>
+#include<iomanip>
+using namespace std;
+int exchange(char a)
+{
+    //将16进制符换为10进制数
+    switch(a)
+    {
+        case '0':return 0;break;
+        case '1':return 1;break;
+        case '2':return 2;break;
+        case '3':return 3;break;
+        case '4':return 4;break;
+        case '5':return 5;break;
+        case '6':return 6;break;
+        case '7':return 7;break;
+        case '8':return 8;break;
+        case '9':return 9;break;
+        case 'A':return 10;break;
+        case 'B':return 11;break;
+        case 'C':return 12;break;
+        case 'D':return 13;break;
+        case 'E':return 14;break;
+        case 'F':return 15;break;
+
+    }
+}
+int main()
+{
+
+    int num_out;
+    cin>>num_out;//需要输出的数的个数
+    long long num_ten[10];//输出的10进制数
+    for(int i=0;i<num_out;i++)
+    {
+
+        char chars[10];
+        cin>>chars;
+        int n=strlen(chars);
+        long long sixteen=1;
+
+
+        num_ten[i]=0;
+        for(int i2=0;i2<n;i2++)
+        {
+            num_ten[i]+=exchange(chars[n-1-i2])*sixteen;
+            sixteen*=16;
+        }
+    }
+
+
+
+
+
+    for(int i=0;i<num_out;i++)
+    {
+       cout<<oct<<num_ten[i];
+       if(i<num_out-1)
+         {
+             cout<<endl;
+         }
+    }
+
+    return 0;
+}
+
+//按题目给的例子验证是正确的，但是不知道哪里有问题 再看看
+
+
+//发现了更简化的代码，其实我不用写16进制转10进制的
+//但还是0分
+
+CODE:(得分：0)
+#include<iostream>
+#include<cmath>
+#include<cstring>
+#include<iomanip>
+using namespace std;
+int main()
+{
+
+    int num_out;
+
+    cin>>num_out;//需要输出的数的个数
+    int num_ten[10];
+    for(int i=0;i<num_out;i++)
+    {
+
+        cin>>hex>>num_ten[i];
+    }
+    for(int i=0;i<num_out;i++)
+    {
+
+        cout<<oct<<num_ten[i];
+        if(i<num_out-1)
+            cout<<endl;
+    }
+
+    return 0;
+}
+
+
+//在网上找了满分代码
+//但是不明白为什么不能用16进制->10进制->8进制 而必须用通过二进制来转换
+//姑且放下疑问 看下二进制的吧 能做出来就好
+
+
+CODE:(得分：100) 引自：https://blog.csdn.net/weixin_43965999/article/details/104225317
+#include<iostream>
+using namespace std;
+//十六进制转八进制,思路是先转二进制再转八进制 
+string trans(char a){
+	switch(a){
+		case '0': return "0000";   //一位十六进制数对四位二进制数
+		case '1': return "0001"; 
+		case '2': return "0010"; 
+		case '3': return "0011"; 
+		case '4': return "0100"; 
+		case '5': return "0101"; 
+		case '6': return "0110"; 
+		case '7': return "0111"; 
+		case '8': return "1000"; 
+		case '9': return "1001"; 
+		case 'A': return "1010"; 
+		case 'B': return "1011"; 
+		case 'C': return "1100"; 
+		case 'D': return "1101"; 
+		case 'E': return "1110"; 
+		case 'F': return "1111"; 
+	}
+}
+
+
+int main(){
+	int n,length,i,j,k=0,surplus,eig,m;
+//这一部分是学习别人的代码学来的，很精妙 
+	//----------------
+	string sixteen[10]; //因为0<=n<=10 
+	cin>>n;
+	for(i=0;i<n;i++){
+		cin>>sixteen[i];
+	} 
+	//----------------
+	
+	//size()/length()：返回字节/字符数量，代表该字符串的长度
+	
+	for(i=0;i<n;i++){
+		string two,eight;
+		for(j=0;j<sixteen[i].length();j++){          
+			two+=trans(sixteen[i][j]);
+		}
+		//以上部分完成十六进制转二进制
+		//在 外层循环 部分继续完成二进制转八进制的部分
+		
+		//****3位二进制数按权展开相加得到1位八进制数****
+		//****注意事项，3位二进制转成八进制是从右到左开始转换，不足时补0）。****
+	
+		//----不足补0部分------- 
+		surplus=two.length()%3;
+		if(surplus==1) two.insert(0,"00");
+		if(surplus==2) two.insert(0,"0");
+		//----------------------
+		
+		//以下为二进制转八进制 
+		for(j=0;j<two.length();j+=3){
+			eig=(two[j]-'0')*4+(two[j+1]-'0')*2+(two[j+2]-'0');   //***要先减‘0’变成对应的整形 
+			eight+=(eig+'0');   //eight是string类型，而eig是int类型，所以要+‘0’ 
+		}	
+		//控制“输出的八进制不能有前导零”,m=0
+		m=0;   //!!!!!!不要漏掉!!!!!!! 
+		while(eight[m]=='0')
+			m++;
+		for(j=m;j<eight.length();j++)
+			cout<<eight[j]; 
+		cout<<endl;	
+	} 
+	return 0;	
+}			
