@@ -1,0 +1,52 @@
+/*这些代码是我经过归纳vector的一些属性后作出的总结 以后如果用到需要vector的地方能在这找到并尽快回想起用法
+*/
+#include<iostream>
+//头文件 vector
+#include<vector>
+//头文件 algorithm 用于实现排序
+#include<algorithm>
+
+//引用自:https://blog.csdn.net/weixin_43350051/article/details/97945841
+bool cmp(int x, int y) ///cmp函数传参的类型不是vector<int>型，是vector中元素类型,即int型
+{
+	return x > y;
+}
+
+using namespace std;
+int main()
+{
+	//定义vector
+	vector<int> a;
+	for (int i = 0; i < 10; i++)
+	{
+		a.push_back(-i * 10);
+
+	}
+	a[9] = 1;
+
+	//遍历1
+	//a.size :a矢量的元素个数
+	cout << "原容器:" << endl;
+	for (int i = 0; i < a.size(); i++)
+	{
+		cout << a[i] << "\t";
+	}
+	//遍历2
+	//for (it = a.begin(); it != a.end(); it++)
+	//	cout << *it << endl;
+
+
+	//排序 从小到大
+	//头文件 algorithm
+	cout << endl<<"排序后:"<<endl;
+	//加上cmp函数 为从大到小排序
+	sort(a.begin(), a.end()/*, cmp*/);
+
+
+	//sort(a.end(), a.begin()); 想用此实现从小到大 但不能实现 会出现错误
+	for (int i = 0; i < a.size(); i++)
+	{
+		cout << a[i] << "\t";
+	}
+	return 0;
+}
