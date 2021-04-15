@@ -18,7 +18,13 @@
 
 CASE# 1：5 found at 4
 
-CASE# 2：2 not foundfound at 3
+CASE# 2：
+2 not found
+3 found at 3
 
 
 ///写了一个用指针来解决这道题的代码，但是遇到麻烦而且很容易难修改，所以我决定用容器来解决，现在先去看一下vector了，明天再继续写这道题
+
+//Vector已经看的差不多了 顺便还写了个Vector的总结代码
+
+//下面是这道题的解决代码:
