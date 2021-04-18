@@ -27,4 +27,93 @@ CASE# 2：
 
 //Vector已经看的差不多了 顺便还写了个Vector的总结代码
 
-//道题的解决代码见Issues
+//道题的解决代码:
+
+#include<iostream>
+//头文件 vector
+#include<vector>
+//头文件 algorithm 用于实现排序
+#include<algorithm>
+
+//bool cmp(int x, int y) ///cmp函数传参的类型不是vector<int>型，是vector中元素类型,即int型
+//{
+//	return x > y;
+//}
+
+using namespace std;
+int main()
+{
+
+	vector<int> a;//CASE1
+	vector<int>a2;//存放CASE1待寻数
+	vector<int>a3;//CASE2
+	vector<int>a4;//存放CASE2待寻数
+	//输入的大理石总数 待寻找的大理石数
+	int num_stone, num_find_stone;
+	cin >> num_stone >> num_find_stone;
+	for (int i = 0; i < num_stone; i++)
+	{
+		int value;
+		cin >> value;
+		a.push_back(value);
+	}
+
+	for (int i = 0; i < num_find_stone; i++)
+	{
+		int value;
+		cin >> value;
+		a2.push_back(value);
+	}
+	cin >> num_stone >> num_find_stone;
+	for (int i = 0; i < num_stone; i++)
+	{
+		int value;
+			cin >> value;
+			a3.push_back(value);
+	}
+	for (int i = 0; i < num_find_stone; i++)
+	{
+		int value;
+			cin >> value;
+			a4.push_back(value);
+	}
+	sort(a.begin(), a.end());
+	sort(a3.begin(), a3.end());
+	cout << "CASE# " << 1 << " : "<<endl;
+	for (int i = 0; i < a2.size(); i++)
+	{
+
+		for (int i2 = 0; i2 < a.size(); i2++)
+		{
+			if (a[i2] == a2[i])
+			{
+				cout << a2[i] << " found at " << i2 + 1 << endl;
+				break;
+			}
+			if (i2 == a.size() - 1)
+			{
+				cout << a2[i] << " not found" << endl;
+				break;
+			}
+		}
+	}
+	cout << "CASE# " << 2 << " : "<<endl;
+	for (int i = 0; i < a4.size(); i++)
+	{
+
+		for (int i2 = 0; i2 < a3.size(); i2++)
+		{
+			if (a3[i2] == a4[i])
+			{
+				cout << a4[i] << " found at " << i2 + 1 << endl;
+				break;
+			}
+			if (i2 == a3.size() - 1)
+			{
+				cout << a4[i] << " not found" << endl;
+				break;
+			}
+		}
+	}
+	return 0;
+}
