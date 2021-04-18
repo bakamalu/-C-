@@ -1,0 +1,20 @@
+题目:
+
+输入一个文本，找出所有不同的单词（连续的字母序列），按字典序列从小到大输出。
+样例输入:
+Adventures in Disneyland
+
+Two blondes were going to Disneyland when they came to a fork in the road.The sign read:"Disneyland Left."
+
+So they went home
+样例输出(为了节约篇幅只保留前5行):
+a
+adventures
+blondes
+came
+disneyland
+
+本题主要是为了学会set的用法所以，我抄的书上的代码
+set的用法会单独出一篇代码来展示
+
+本体代码见Issues
