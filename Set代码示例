@@ -1,0 +1,97 @@
+#include<iostream>
+
+//看了C++标准库后发现 set与Multiset 基本上是绑在一起的
+//set:不允许有重复元素，自动元素排序
+
+//Multiset:允许有重复元素，自动元素排列
+
+//两者通常以平衡二叉树完成
+
+
+//头文件（两者的头文件均为set）
+#include<set>
+using namespace std;
+void show(set<int>a)
+{
+	int feed = 1;//换行用
+	//set的迭代                                set的end指向空处
+	for(set<int>::iterator i = a.begin(); i != a.end(); i++)
+	//for (int i = 0; i < a.size(); i++)//错误 应该用迭代器
+	{
+
+		//错误!  set不能直接用这种方式取值 应当用
+		//cout << a[i] << " ";
+		
+		cout << *i << "\t";
+		
+		if (feed % 10 == 0)
+			cout <<"Has now been output :"<<feed<< endl;
+		feed++;
+	}
+}
+
+/*
+class cmp
+{
+public:
+	bool operator()(int x, int y)
+	{
+		return x>y;
+	}
+};*/
+int main()
+
+{
+	//此为默认的从小到大排序 set<Elem>
+	set<int>aa;
+
+	//改变排序为从大到小 set<Elem,Op>
+	//set<int,cmp>aa; //但是用后函数以及其他会出现问题所以不用了
+
+	//想要逆序就从end()向 begin()迭代吧
+
+	//模版里面默认的比较函数是less 设计： 仿函数 不会 再说
+
+	for (int i = 0; i < 30; i++)
+	{
+		//set使用insert插入元素 而非vector中的push_back
+		aa.insert(-i * 10 + 1);
+	}
+	
+	//展示
+	//show(aa);
+
+	cout << "begin:" << *aa.begin() << endl;
+
+	// 错误 set的end指向空
+	//cout << "end:"<<*aa.end() << endl;
+	
+	// 正确 输出set的最后一个元素
+	cout << "last:" << *(--aa.end()) << endl;
+
+	//empty判断set是否为空 返回一个bool类型的值 为空返回true
+	cout << "empty():" << aa.empty() <<endl;
+	if (!aa.empty())
+		cout << "not empty！" << endl;
+
+	//size() 取元素的个数
+	cout << "size():" << aa.size() << endl;
+
+	//能容纳的元素的最大限值 不知道做什么用
+	cout << "max_size():" << aa.max_size() << endl;
+
+	//用于寻找set中某数的个数  set中可用来判断是否存在某元素  而multiset中可用来得到元素重复的个数
+	cout << "12的个数:" << aa.count(12) << endl;
+	cout << "1的个数:" << aa.count(1) << endl;
+
+	//用于寻找set中某数 若找到返回其迭代指针 否则返回end()
+	set<int>::iterator finds = aa.find(1);
+	cout << "1元素的上一个元素:" << *(--finds) << endl;
+
+	//set<int>a2(aa);//copy构造函数 复制自c2 同set<int> a=a2;
+	set<int> a2(aa);
+	cout << "复制后的set:" << endl;
+	show(a2);
+
+	return 0;
+}
