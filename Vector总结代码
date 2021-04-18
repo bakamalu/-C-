@@ -6,6 +6,8 @@
 //头文件 algorithm 用于实现排序
 #include<algorithm>
 
+//通过函数对vector进行改动操作需要加上& 如 (vector<int>& a)
+
 //引用自:https://blog.csdn.net/weixin_43350051/article/details/97945841
 bool cmp(int x, int y) ///cmp函数传参的类型不是vector<int>型，是vector中元素类型,即int型
 {
