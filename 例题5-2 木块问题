@@ -1,5 +1,227 @@
 我写的这道题的代码是有点问题的，如果重写一遍的话我就会了，主要是再改一遍太麻烦了，所以暂且这样，大致vector这道题教的都会了
 
-代码见Issues
+代码:
+
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+const int maxn = 100;
+vector<int>pile[maxn];
+//木堆数
+int length = 0;
+
+//找到value元素所在位置 n为堆位置(-1)  h为高度(-1)
+void find_location(int value, int &n, int &h)
+{
+	for (int i = 0; i < length; i++)
+	{
+		for (int i2 = 0; i2 < pile[i].size(); i2++)
+		{
+			if (pile[i][i2] == value)
+			{
+				n = i;
+				h = i2;
+				return;
+			}
+		}
+	}
+}
+void move_onto(int a, int b)
+{
+	int n, h;
+	find_location(a, n, h);
+	//将a上元素全归位
+	int na = maxn;
+	for (; na > a;)
+	{
+		//temp_pile :遍历pile容器堆
+		na = pile[n].size() - 1;
+		for (int temp_pile = 0; temp_pile < length; temp_pile++)
+		{
+			if (temp_pile == pile[n][na])
+			{
+				pile[temp_pile].push_back(temp_pile);
+				pile[n].pop_back();
+				break;
+			}
+		}
+	}
+	//a块移走
+	pile[a].pop_back();
+	//将b上元素全归位
+	find_location(b, n, h);
+	int nb = maxn;
+	for (; nb > a;)
+	{
+		//temp_pile :遍历pile容器堆
+		nb = pile[n].size() - 1;
+		for (int temp_pile = 0; temp_pile < length; temp_pile++)
+		{
+			if (temp_pile == pile[n][nb])
+			{
+				pile[temp_pile].push_back(temp_pile);
+				pile[n].pop_back();
+				break;
+			}
+		}
+	}
+	//a木块移走到b
+
+	pile[n].push_back(a);
+}
+void move_over(int a, int b)
+{
+	int n, h;
+	find_location(a, n, h);
+
+	//将a上元素全归位
+	int na = maxn;//a块所在地的最高点纵坐标
+	for (; na > h;)
+	{
+		//temp_pile :遍历pile容器堆
+		na = pile[n].size() - 1;
+		for (int temp_pile = 0; temp_pile < length; temp_pile++)
+		{
+			if (temp_pile == pile[n][na])
+			{
+				pile[temp_pile].push_back(temp_pile);
+				pile[n].pop_back();// 导致 pile[n].size()--
+				break;
+			}
+		}
+	}
+	//a块移走
+	pile[n].pop_back();
+	//把a放在b堆顶
+	find_location(b, n, h);
+	pile[n].push_back(a);
+}
+void pile_onto(int a, int b)
+{
+	int n, h;
+	//将b上元素全归位
+	find_location(b, n, h);
+	int nb = maxn;
+	for (; nb > h;)
+	{
+		//temp_pile :遍历pile容器堆
+		nb = pile[n].size() - 1;
+		for (int temp_pile = 0; temp_pile < length; temp_pile++)
+		{
+			if (temp_pile == pile[n][nb])
+			{
+				pile[temp_pile].push_back(temp_pile);
+				pile[n].pop_back();
+				break;
+			}
+		}
+	}
+
+	//a的位置与高度
+	int na, ha;
+	find_location(a, na, ha);
+	//将a木块全部放在b顶端
+	for (int i = ha; i < pile[na].size();)
+	{
+
+		pile[n].push_back(pile[na][i]);
+	}
+	//a木块清空
+	for (int i = ha; i < pile[na].size(); )
+	{
+		pile[na].pop_back();
+	}
+}
+void pile_over(int a, int b)
+{
+	int n, h;
+	find_location(a, n, h);
+	//将a木块全部放在b顶端
+	int nb, hb;
+	find_location(b, nb, hb);
+	for (int i = h; i < pile[n].size(); i++)
+	{
+
+		pile[nb].push_back(pile[n][i]);
+	}
+	//原地点 a及其上方的木块请走
+	for (int i = h; i < pile[n].size();)
+	{
+		
+		pile[n].pop_back();
+	}
+	
+}
+void print()
+{
+	for (int i = 0; i < length; i++)
+	{
+		cout << i << ": ";
+		for (int i2 = 0; i2 < pile[i].size(); i2++)
+		{
+			cout << pile[i][i2] << " ";
+
+		}
+		cout << endl;
+	}
+}
+//检验用 用于寻错
+void test(int i)
+{
+	cout << endl << i << endl;
+}
+int main()
+{
+
+	int n;
+	//木堆数
+	cin >> n;
+	length = n;
+	string s1, s2;
+	int n1, n2;
+
+	//木堆初始化
+	for (int i = 0; i < n; i++)
+	{
+		pile[i].push_back(i);
+	}
+
+	//print();
+	for (;;)
+	{
+
+		cin >> s1;
+		if (s1 == "quit")
+			break;
+		cin >> n1 >> s2 >> n2;
+		if (s1 == "move")
+		{
+			if (s2 == "onto")
+			{
+				move_onto(n1, n2);
+			}
+			else
+			{
+				move_over(n1, n2);
+			}
+		}
+		if (s1 == "pile")
+		{
+			if (s2 == "onto")
+			{
+				pile_onto(n1, n2);
+			}
+			else
+			{
+				pile_over(n1, n2);
+			}
+		}
+
+	}
+
+	print();
+	return 0;
+}
 
 
